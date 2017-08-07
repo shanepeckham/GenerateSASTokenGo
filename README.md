@@ -1,5 +1,5 @@
 # GenerateSASTokenGo
-Generate a SaS token for Service Hub with Go
+Generate a SaS token for Azure Service Hub with Go
 
 See the following page for context [Generate SaS Token](https://docs.microsoft.com/en-us/rest/api/eventhub/generate-sas-token)
 
