@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	SaS := createSharedAccessToken("http://k8orders.servicebus.windows.net/orders", "RootPolicyAccess", "BuadZK3FAMBAma7xMBQpriPibHc8oPDcV3207lpBNMo=")
+	SaS := createSharedAccessToken("http://k8orders.servicebus.windows.net/orders", "RootPolicyAccess", "=")
 	fmt.Println(SaS)
 }
 
