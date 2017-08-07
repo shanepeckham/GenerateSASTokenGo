@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	SaS := createSharedAccessToken("http://k8orders.servicebus.windows.net/orders", "RootPolicyAccess", "=")
+	SaS := createSharedAccessToken("<ServiceBusURL>", "<PolicyName>", "<SecretKey>")
 	fmt.Println(SaS)
 }
 
