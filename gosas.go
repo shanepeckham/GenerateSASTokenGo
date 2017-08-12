@@ -5,14 +5,13 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
-	"net/url"
 	"strconv"
-	"strings"
+	"text/template"
 	"time"
 )
 
 func main() {
-	SaS := createSharedAccessToken("http://k8orders.servicebus.windows.net/orders", "RootPolicyAccess", "BuadZK3FAMBAma7xMBQpriPibHc8oPDcV3207lpBNMo=")
+	SaS := createSharedAccessToken("<ServiceBusURL>", "<PolicyName>", "<SecretKey>")
 	fmt.Println(SaS)
 }
 
@@ -22,8 +21,7 @@ func createSharedAccessToken(uri string, saName string, saKey string) string {
 		return "Missing required parameter"
 	}
 
-	encoded := url.PathEscape(uri)
-	encoded = strings.Replace(encoded, ":", "%3A", -1)
+	encoded := template.URLQueryEscaper(uri)
 	now := time.Now().Unix()
 	week := 60 * 60 * 24 * 7
 	ts := now + int64(week)
@@ -31,8 +29,7 @@ func createSharedAccessToken(uri string, saName string, saKey string) string {
 	key := []byte(saKey)
 	hmac := hmac.New(sha256.New, key)
 	hmac.Write([]byte(signature))
-	hmacString := url.PathEscape(base64.StdEncoding.EncodeToString(hmac.Sum(nil)))
-	hmacString = strings.Replace(hmacString, "=", "%3D", -1)
+	hmacString := template.URLQueryEscaper(base64.StdEncoding.EncodeToString(hmac.Sum(nil)))
 
 	result := "SharedAccessSignature sr=" + encoded + "&sig=" +
 		hmacString + "&se=" + strconv.Itoa(int(ts)) + "&skn=" + saName
